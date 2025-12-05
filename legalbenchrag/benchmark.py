@@ -5,10 +5,10 @@ import random
 
 import pandas as pd
 
-from legalbenchrag.benchmark_types import Benchmark, Document, QAGroundTruth
-from legalbenchrag.methods.baseline import BaselineRetrievalMethod
-from legalbenchrag.methods.retrieval_strategies import RETRIEVAL_STRATEGIES
-from legalbenchrag.run_benchmark import run_benchmark
+from benchmark_types import Benchmark, Document, QAGroundTruth
+from methods.baseline import BaselineRetrievalMethod
+from methods.retrieval_strategies import RETRIEVAL_STRATEGIES
+from run_benchmark import run_benchmark
 
 benchmark_name_to_weight: dict[str, float] = {
     "privacy_qa": 0.25,
@@ -33,7 +33,9 @@ async def main() -> None:
     document_file_paths_set: set[str] = set()
     used_document_file_paths_set: set[str] = set()
     for benchmark_name, weight in benchmark_name_to_weight.items():
-        with open(f"./data/benchmarks/{benchmark_name}.json") as f:
+        with open(
+            f"/home/janelle/workspace/legalbenchrag/data/benchmarks/{benchmark_name}.json"
+        ) as f:
             benchmark = Benchmark.model_validate_json(f.read())
             tests = benchmark.tests
             document_file_paths_set |= {
@@ -73,7 +75,9 @@ async def main() -> None:
         if not SORT_BY_DOCUMENT
         else used_document_file_paths_set
     ):
-        with open(f"./data/corpus/{document_file_path}") as f:
+        with open(
+            f"/home/janelle/workspace/legalbenchrag/data/corpus/{document_file_path}"
+        ) as f:
             corpus.append(
                 Document(
                     file_path=document_file_path,
@@ -83,7 +87,9 @@ async def main() -> None:
 
     # Create a save location for this run
     run_name = dt.datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
-    benchmark_path = f"./benchmark_results/{run_name}"
+    benchmark_path = (
+        f"/home/janelle/workspace/legalbenchrag/benchmark_results/{run_name}"
+    )
     os.makedirs(benchmark_path, exist_ok=True)
 
     rows: list[dict[str, str | None | int | float]] = []
@@ -113,9 +119,11 @@ async def main() -> None:
             "chunk_strategy_name": retrieval_strategy.chunking_strategy.strategy_name,
             "chunk_size": retrieval_strategy.chunking_strategy.chunk_size,
             "top_k": retrieval_strategy.embedding_topk,
-            "rerank_model": retrieval_strategy.rerank_model.company
-            if retrieval_strategy.rerank_model is not None
-            else None,
+            "rerank_model": (
+                retrieval_strategy.rerank_model.company
+                if retrieval_strategy.rerank_model is not None
+                else None
+            ),
             "top_k_rerank": retrieval_strategy.rerank_topk,
             "token_limit": retrieval_strategy.token_limit,
         }

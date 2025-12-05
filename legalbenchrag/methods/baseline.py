@@ -8,13 +8,13 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 from pydantic import BaseModel
 from tqdm import tqdm
 
-from legalbenchrag.benchmark_types import (
+from benchmark_types import (
     Document,
     QueryResponse,
     RetrievalMethod,
     RetrievedSnippet,
 )
-from legalbenchrag.utils.ai import (
+from utils.ai import (
     AIEmbeddingModel,
     AIEmbeddingType,
     AIRerankModel,
@@ -149,9 +149,9 @@ class BaselineRetrievalMethod(RetrievalMethod):
                 self.retrieval_strategy.embedding_model,
                 [chunk.content for chunk in chunk_batch],
                 AIEmbeddingType.DOCUMENT,
-                callback=lambda: (progress_bar.update(1), None)[1]
-                if progress_bar
-                else None,
+                callback=lambda: (
+                    (progress_bar.update(1), None)[1] if progress_bar else None
+                ),
             )
             assert len(chunk_batch) == len(embeddings)
             # Save the Info

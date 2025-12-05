@@ -18,3 +18,8 @@ LegalBenchRAG.egg-info
 # TODO: Use git-lfs
 data/benchmarks
 data/corpus
+
+
+
+
+data/

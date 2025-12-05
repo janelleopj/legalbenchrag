@@ -5,7 +5,7 @@ from typing import Any
 from pydantic import BaseModel, computed_field, model_validator
 from typing_extensions import Self
 
-from legalbenchrag.benchmark_types import (
+from benchmark_types import (
     Document,
     QAGroundTruth,
     RetrievalMethod,

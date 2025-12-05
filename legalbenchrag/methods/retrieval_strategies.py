@@ -1,7 +1,7 @@
 from typing import Literal
 
-from legalbenchrag.methods.baseline import ChunkingStrategy, RetrievalStrategy
-from legalbenchrag.utils.ai import AIEmbeddingModel, AIRerankModel
+from methods.baseline import ChunkingStrategy, RetrievalStrategy
+from utils.ai import AIEmbeddingModel, AIRerankModel
 
 chunk_strategy_names: list[Literal["naive", "rcts"]] = ["naive", "rcts"]
 rerank_models: list[AIRerankModel | None] = [

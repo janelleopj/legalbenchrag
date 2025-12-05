@@ -13,5 +13,7 @@ class Credentials(BaseModel):
     ai: AICredentials
 
 
-with open("./credentials/credentials.toml", "rb") as credentials_file:
+with open(
+    "/home/janelle/workspace/legalbenchrag/credentials/credentials.toml", "rb"
+) as credentials_file:
     credentials = Credentials.model_validate(tomllib.load(credentials_file))
